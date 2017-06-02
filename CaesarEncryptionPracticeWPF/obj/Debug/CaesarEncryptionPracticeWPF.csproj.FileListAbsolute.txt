@@ -1,0 +1,17 @@
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\bin\Debug\CaesarEncryptionPracticeWPF.exe.config
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\bin\Debug\CaesarEncryptionPracticeWPF.exe
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\bin\Debug\CaesarEncryptionPracticeWPF.pdb
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\obj\Debug\CaesarEncryptionPracticeWPF.csprojResolveAssemblyReference.cache
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\obj\Debug\MainWindow.baml
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\obj\Debug\MainWindow.g.cs
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\obj\Debug\App.g.cs
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\obj\Debug\CaesarEncryptionPracticeWPF_MarkupCompile.cache
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\obj\Debug\CaesarEncryptionPracticeWPF.g.resources
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\obj\Debug\CaesarEncryptionPracticeWPF.Properties.Resources.resources
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\obj\Debug\CaesarEncryptionPracticeWPF.csproj.GenerateResource.Cache
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\obj\Debug\CaesarEncryptionPracticeWPF.exe
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\obj\Debug\CaesarEncryptionPracticeWPF.pdb
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\bin\Debug\system.windows.controls.datavisualization.toolkit.dll
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\bin\Debug\WPFToolkit.dll
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\bin\Debug\system.windows.controls.datavisualization.toolkit.pdb
+D:\SergeyVolikStudy\2 курс\Practice\CaesarEncryptionPracticeWPF\CaesarEncryptionPracticeWPF\bin\Debug\WPFToolkit.pdb
