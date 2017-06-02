@@ -49,28 +49,48 @@ namespace CaesarEncryptionPracticeWPF
             }
             return outputString;
         }
-        public string CaesarDecode()
-        {
-            outputString = "";
-            int shiftROT = 0;           
+        public string CaesarDecode(List<string> dictionary, out int shiftROT)
+        {            
+            string[] wordmas;
+            shiftROT = 0;
             int indexletter;
             for (int i = 0; i < alphabet.Length; i++)
             {
+                string str = "";
                 for (int j = 0; j < inputString.Length; j++)
                 {
                     indexletter = IndexOfALetter(inputString[j]);
-                    if (indexletter == -1) outputString += inputString[j];
+                    if (indexletter == -1) str += inputString[j];
                     else
-                    {
-                        alphabet[indexletter].count++;
+                    {                      
                         int newIndex = (indexletter + shiftROT) % (alphabet.Length);
-                        outputString += alphabet[newIndex].letter;
+                        str += alphabet[newIndex].letter;
                     }
+                    
                 }
-                outputString += "\n";
+                wordmas = str.Split(' ',',','!','?','.');
                 shiftROT++;
+                string bigword = SearchingLargestWord(wordmas);
+                if (dictionary.Contains(bigword))
+                    return str;
             }
-            return outputString;
+            return "error";
+            
         }
+        private string SearchingLargestWord(string[]mas)
+        {
+            int maxlength = -9999999;
+            int index = -1;
+            for (int i = 0; i < mas.Length; i++)
+            {
+                if (maxlength < mas[i].Length)
+                {
+                    index = i;
+                    maxlength = mas[i].Length;
+                }
+            }
+            return mas[index];
+        }
+        //fcjjm, kw lykc gq tmjgi qcpecw
     }
 }

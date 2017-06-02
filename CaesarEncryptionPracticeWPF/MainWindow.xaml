@@ -27,6 +27,7 @@
                 <PointCollection>1 1</PointCollection>
             </chartingToolkit:Chart.DataContext>
             <chartingToolkit:ColumnSeries DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding}"/>       
+
         </chartingToolkit:Chart>
 
     </Grid>

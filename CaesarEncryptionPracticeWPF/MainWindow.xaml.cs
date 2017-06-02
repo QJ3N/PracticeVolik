@@ -32,23 +32,27 @@ namespace CaesarEncryptionPracticeWPF
                                              new LetterAndCount('z', 0)};
             
         private CaesarCode cc;
+        private myDictionary d;        
+
         
         public MainWindow()
         {
             cc = new CaesarCode(alphabetLetterAndCount);
+            d = new myDictionary("dictionaryenglish.txt");
             InitializeComponent();
-            showColumnChart(alphabetLetterAndCount);
-            //columnChart.DataContext = new List<KeyValuePair<string, int>>();
+            showColumnChart(alphabetLetterAndCount);           
         }
 
         private void DecryptionButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                LetterAndCount[] mass = DeepCopy(alphabetLetterAndCount);
+                int shifROT;
+                LetterAndCount[] mass = myAlphabet.DeepCopy(alphabetLetterAndCount);
                 cc = new CaesarCode(mass);
                 cc.InputString = TextBoxFirst.Text;
-                TextBoxSecond.Text = cc.CaesarDecode();
+                TextBoxSecond.Text = cc.CaesarDecode(d.MyDictionary, out shifROT);
+                showColumnChart(cc.Alphabet);
             }
             catch (Exception ex)
             {
@@ -59,7 +63,7 @@ namespace CaesarEncryptionPracticeWPF
         {
             try
             {
-                LetterAndCount[] mass = DeepCopy(alphabetLetterAndCount);
+                LetterAndCount[] mass = myAlphabet.DeepCopy(alphabetLetterAndCount);
                 cc = new CaesarCode(mass);
                 cc.InputString = TextBoxFirst.Text;
                 if (Int32.Parse(TextBoxROT.Text) < 0) throw new Exception("Error: number ROT is negative");
@@ -81,15 +85,7 @@ namespace CaesarEncryptionPracticeWPF
             //Setting data for column chart
             columnChart.DataContext = valueList;           
         }
-        private LetterAndCount[] DeepCopy(LetterAndCount[] alphabet)
-        {
-            LetterAndCount[] mass = new LetterAndCount[alphabet.Length];
-            for (int i = 0; i < alphabet.Length; i++)
-            {
-                mass[i] = new LetterAndCount(alphabet[i].letter, alphabet[i].count);
-            }
-            return mass;
-        }
+        
         
     }
 }
