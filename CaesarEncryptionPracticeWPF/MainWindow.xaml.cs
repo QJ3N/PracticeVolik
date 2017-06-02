@@ -40,6 +40,7 @@ namespace CaesarEncryptionPracticeWPF
             cc = new CaesarCode(alphabetLetterAndCount);
             d = new myDictionary("dictionaryenglish.txt");
             InitializeComponent();
+            TextBoxFirst.TextChanged += text_TextChanged;
             showColumnChart(alphabetLetterAndCount);           
         }
 
@@ -47,12 +48,16 @@ namespace CaesarEncryptionPracticeWPF
         {
             try
             {
-                int shifROT;
+                //TextBoxFirst.TextChanged
+                int shiftROT;
+                string str;
                 LetterAndCount[] mass = myAlphabet.DeepCopy(alphabetLetterAndCount);
                 cc = new CaesarCode(mass);
                 cc.InputString = TextBoxFirst.Text;
-                TextBoxSecond.Text = cc.CaesarDecode(d.MyDictionary, out shifROT);
-                showColumnChart(cc.Alphabet);
+                TextBoxSecond.Text = cc.CaesarDecode(d.MyDictionary, out shiftROT);
+                //if (shiftROT == -1) throw new Exception( )
+                TextBlockNumberOfROT.Content= "The expected shift for this text: " + shiftROT;
+                
             }
             catch (Exception ex)
             {
@@ -67,14 +72,29 @@ namespace CaesarEncryptionPracticeWPF
                 cc = new CaesarCode(mass);
                 cc.InputString = TextBoxFirst.Text;
                 if (Int32.Parse(TextBoxROT.Text) < 0) throw new Exception("Error: number ROT is negative");
-                TextBoxSecond.Text = cc.InCaesarCode(Int32.Parse(TextBoxROT.Text));
-                showColumnChart(cc.Alphabet);
+                TextBoxSecond.Text = cc.InCaesarCode(Int32.Parse(TextBoxROT.Text));                
             }
             catch (Exception ex)
             {  
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
+        }
+        private void text_TextChanged(object sender, EventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int indexletter;
+            LetterAndCount[] lac = myAlphabet.DeepCopy(alphabetLetterAndCount);
+            for (int i = 0; i < tb.Text.Length; i++)
+            {
+                indexletter = cc.IndexOfALetter(tb.Text[i]);
+                if (indexletter == -1) continue;
+                else
+                {
+                    lac[indexletter].count++;                   
+                }
+            }
+            showColumnChart(lac);
         }
         private void showColumnChart(LetterAndCount[]alphabet)
         {

@@ -21,7 +21,7 @@ namespace CaesarEncryptionPracticeWPF
             this.inputString = "";
             this.outputString = "";
         }       
-        private int IndexOfALetter(char letter)
+        public int IndexOfALetter(char letter)
         {
             for (int i = 0; i < alphabet.Length; i++)
                 if (alphabet[i].letter == letter)
@@ -41,7 +41,7 @@ namespace CaesarEncryptionPracticeWPF
                 if (indexletter == -1) outputString += inputString[i];
                 else
                 {                    
-                    alphabet[indexletter].count++;
+                    //alphabet[indexletter].count++;
                     int newIndex = (indexletter + shiftROT) % (alphabet.Length);
                     outputString += alphabet[newIndex].letter;
                 }
@@ -69,12 +69,14 @@ namespace CaesarEncryptionPracticeWPF
                     
                 }
                 wordmas = str.Split(' ',',','!','?','.');
-                shiftROT++;
+                
                 string bigword = SearchingLargestWord(wordmas);
                 if (dictionary.Contains(bigword))
                     return str;
+                shiftROT++;
             }
-            return "error";
+            shiftROT = -1;
+            return "error:";
             
         }
         private string SearchingLargestWord(string[]mas)
