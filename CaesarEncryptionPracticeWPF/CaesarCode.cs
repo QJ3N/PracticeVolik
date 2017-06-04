@@ -10,12 +10,12 @@ namespace CaesarEncryptionPracticeWPF
     class CaesarCode
     {
         //private char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
-        private LetterAndCount[] alphabet;
+        private char [] alphabet;
         private string inputString;
         private string outputString;
         public string InputString { get { return inputString; } set { inputString = value; } }
-        public LetterAndCount[] Alphabet { get { return alphabet; } set { alphabet = value; } }
-        public CaesarCode(LetterAndCount[] alphabet)
+        public char [] Alphabet { get { return alphabet; } set { alphabet = value; } }
+        public CaesarCode(char[] alphabet)
         {
             this.alphabet = alphabet;
             this.inputString = "";
@@ -24,7 +24,7 @@ namespace CaesarEncryptionPracticeWPF
         public int IndexOfALetter(char letter)
         {
             for (int i = 0; i < alphabet.Length; i++)
-                if (alphabet[i].letter == letter)
+                if (alphabet[i] == letter)
                     return i;
             return -1;
         }
@@ -43,7 +43,7 @@ namespace CaesarEncryptionPracticeWPF
                 {                    
                     //alphabet[indexletter].count++;
                     int newIndex = (indexletter + shiftROT) % (alphabet.Length);
-                    outputString += alphabet[newIndex].letter;
+                    outputString += alphabet[newIndex];
                 }
                 
             }
@@ -64,11 +64,11 @@ namespace CaesarEncryptionPracticeWPF
                     else
                     {                      
                         int newIndex = (indexletter + shiftROT) % (alphabet.Length);
-                        str += alphabet[newIndex].letter;
+                        str += alphabet[newIndex];
                     }
                     
                 }
-                wordmas = str.Split(' ',',','!','?','.');
+                wordmas = str.Split(' ',',','!','?','.',';',':');
                 
                 string bigword = SearchingLargestWord(wordmas);
                 if (dictionary.Contains(bigword))

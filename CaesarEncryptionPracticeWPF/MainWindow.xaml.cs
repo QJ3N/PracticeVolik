@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Windows.Threading;
 namespace CaesarEncryptionPracticeWPF
 {
     /// <summary>
@@ -22,41 +22,52 @@ namespace CaesarEncryptionPracticeWPF
     
     public partial class MainWindow : Window
     {
-       
-        //private char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
-        private LetterAndCount[] alphabetLetterAndCount = { new LetterAndCount('a', 0), new LetterAndCount('b', 0), new LetterAndCount('c', 0), new LetterAndCount('d', 0), new LetterAndCount('e', 0),
-                                             new LetterAndCount('f',0),new LetterAndCount('g',0),new LetterAndCount('h',0), new LetterAndCount('i', 0), new LetterAndCount('j', 0),
-                                             new LetterAndCount('k', 0), new LetterAndCount('l', 0), new LetterAndCount('m', 0), new LetterAndCount('n', 0), new LetterAndCount('o', 0),
-                                             new LetterAndCount('p', 0), new LetterAndCount('q', 0), new LetterAndCount('r', 0), new LetterAndCount('s', 0), new LetterAndCount('t', 0),
-                                             new LetterAndCount('u', 0), new LetterAndCount('v', 0),new LetterAndCount('w', 0), new LetterAndCount('x', 0), new LetterAndCount('y', 0),
-                                             new LetterAndCount('z', 0)};
-            
+
+        private char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
+                                      'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+        private int[] mascounter;
         private CaesarCode cc;
-        private myDictionary d;        
+        private myDictionary d;
+        private DispatcherTimer timer;
 
         
         public MainWindow()
         {
-            cc = new CaesarCode(alphabetLetterAndCount);
-            d = new myDictionary("dictionaryenglish.txt");
             InitializeComponent();
+            cc = new CaesarCode(alphabet);
+            d = new myDictionary("dictionaryenglish.txt");
+            timer = new DispatcherTimer();
+            timer.Tick += timer_Tick;
+            timer.Interval = new TimeSpan(0, 0, 1);           
             TextBoxFirst.TextChanged += text_TextChanged;
-            showColumnChart(alphabetLetterAndCount);           
+            int[] mascounter = new int[alphabet.Length];
+            for (int i = 0; i < mascounter.Length; i++)
+                mascounter[i] = 0;
+            showColumnChart(alphabet, mascounter);
         }
 
         private void DecryptionButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                //TextBoxFirst.TextChanged
+                
                 int shiftROT;
                 string str;
-                LetterAndCount[] mass = myAlphabet.DeepCopy(alphabetLetterAndCount);
-                cc = new CaesarCode(mass);
+                cc = new CaesarCode(alphabet);
                 cc.InputString = TextBoxFirst.Text;
-                TextBoxSecond.Text = cc.CaesarDecode(d.MyDictionary, out shiftROT);
-                //if (shiftROT == -1) throw new Exception( )
-                TextBlockNumberOfROT.Content= "The expected shift for this text: " + shiftROT;
+                 str = cc.CaesarDecode(d.MyDictionary, out shiftROT);
+                 if (shiftROT == -1)
+                 {
+                     TextBoxSecond.Text = "";
+                     TextBlockNumberOfROT.Content = "The expected shift for this text: ";
+                     throw new Exception("Error: Words do not exist!");
+
+                 }
+                 else
+                 {
+                     TextBoxSecond.Text = str;
+                     TextBlockNumberOfROT.Content = "The expected shift for this text: " + shiftROT;
+                 }
                 
             }
             catch (Exception ex)
@@ -68,8 +79,7 @@ namespace CaesarEncryptionPracticeWPF
         {
             try
             {
-                LetterAndCount[] mass = myAlphabet.DeepCopy(alphabetLetterAndCount);
-                cc = new CaesarCode(mass);
+                cc = new CaesarCode(alphabet);
                 cc.InputString = TextBoxFirst.Text;
                 if (Int32.Parse(TextBoxROT.Text) < 0) throw new Exception("Error: number ROT is negative");
                 TextBoxSecond.Text = cc.InCaesarCode(Int32.Parse(TextBoxROT.Text));                
@@ -80,32 +90,38 @@ namespace CaesarEncryptionPracticeWPF
             }
 
         }
+       
         private void text_TextChanged(object sender, EventArgs e)
         {
+            timer.IsEnabled = false;
             TextBox tb = (TextBox)sender;
-            int indexletter;
-            LetterAndCount[] lac = myAlphabet.DeepCopy(alphabetLetterAndCount);
+            int indexletter;           
+            mascounter = new int[alphabet.Length];
+            for (int i = 0; i < mascounter.Length; i++)
+                mascounter[i] = 0;
+
             for (int i = 0; i < tb.Text.Length; i++)
             {
                 indexletter = cc.IndexOfALetter(tb.Text[i]);
                 if (indexletter == -1) continue;
-                else
-                {
-                    lac[indexletter].count++;                   
-                }
+                else mascounter[indexletter]++;                                   
             }
-            showColumnChart(lac);
+            timer.IsEnabled = true;                                          
+             
+                
         }
-        private void showColumnChart(LetterAndCount[]alphabet)
-        {
-            
+        private void showColumnChart(char[]alphabet,int[]mascounter)
+        {            
             List<KeyValuePair<string, int>> valueList = new List<KeyValuePair<string, int>>();
-            for (int i = 0; i < alphabetLetterAndCount.Length;i++ )
-                valueList.Add(new KeyValuePair<string, int>(alphabet[i].letter.ToString(), alphabet[i].count));
+            for (int i = 0; i < alphabet.Length; i++)
+                valueList.Add(new KeyValuePair<string, int>(alphabet[i].ToString(), mascounter[i]));
             //Setting data for column chart
             columnChart.DataContext = valueList;           
         }
-        
-        
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            showColumnChart(alphabet, mascounter);
+            timer.IsEnabled = false;
+        }
     }
 }
