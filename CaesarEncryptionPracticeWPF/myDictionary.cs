@@ -26,5 +26,14 @@ namespace CaesarEncryptionPracticeWPF
             }           
             sr.Close();
         }
+        public static void WriteFile(string filename,List<string> list)
+        {            
+            StreamWriter sw = new StreamWriter(filename);            
+            for (int i = 0; i < list.Count; i++)
+            {
+                sw.WriteLine(list[i]);
+            }
+            sw.Close();
+        }
     }
 }

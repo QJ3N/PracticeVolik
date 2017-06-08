@@ -9,7 +9,7 @@ namespace CaesarEncryptionPracticeWPF
     
     class CaesarCode
     {
-        //private char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+        
         private char [] alphabet;
         private string inputString;
         private string outputString;
@@ -31,14 +31,15 @@ namespace CaesarEncryptionPracticeWPF
         public string InCaesarCode(int shiftROT)
         {
             outputString = "";
+            string str = inputString.ToLower();
             int indexletter;
             if (shiftROT > alphabet.Length)
                 shiftROT = shiftROT % alphabet.Length;
 
-            for (int i = 0; i < inputString.Length; i++)
+            for (int i = 0; i < str.Length; i++)
             {
-                indexletter = IndexOfALetter(inputString[i]);
-                if (indexletter == -1) outputString += inputString[i];
+                indexletter = IndexOfALetter(str[i]);
+                if (indexletter == -1) outputString += str[i];
                 else
                 {                    
                     //alphabet[indexletter].count++;
@@ -51,7 +52,7 @@ namespace CaesarEncryptionPracticeWPF
         }
         public string CaesarDecode(List<string> dictionary, out int shiftROT)
         {            
-            string[] wordmas;
+            string[] wordsmasnonull,words;
             shiftROT = 0;
             int indexletter;
             for (int i = 0; i < alphabet.Length; i++)
@@ -65,34 +66,39 @@ namespace CaesarEncryptionPracticeWPF
                     {                      
                         int newIndex = (indexletter + shiftROT) % (alphabet.Length);
                         str += alphabet[newIndex];
-                    }
-                    
+                    }                  
                 }
-                wordmas = str.Split(' ',',','!','?','.',';',':');
+                words = str.Split(' ', ',', '!', '?', '.', ';', ':');                
+                wordsmasnonull = ClearNullStrings(words);
+                //foreach (var w in wordsmasnonull)
+                //    w.ToLower();
                 
-                string bigword = SearchingLargestWord(wordmas);
-                if (dictionary.Contains(bigword))
+                
+                int truecounter = 0;
+                for (int k = 0; k < wordsmasnonull.Length; k++)
+                {
+                    if (BinarySearchForString.Search(dictionary, wordsmasnonull[k]))
+                        truecounter++;
+                }
+                if (((double)truecounter / wordsmasnonull.Length) >= 0.5)
+                {
+                    if(shiftROT!=0)
+                    shiftROT = alphabet.Length - shiftROT;
                     return str;
+                }
+
                 shiftROT++;
             }
             shiftROT = -1;
             return "error:";
             
         }
-        private string SearchingLargestWord(string[]mas)
+        private string[] ClearNullStrings(string[] str)        
         {
-            int maxlength = -9999999;
-            int index = -1;
-            for (int i = 0; i < mas.Length; i++)
-            {
-                if (maxlength < mas[i].Length)
-                {
-                    index = i;
-                    maxlength = mas[i].Length;
-                }
-            }
-            return mas[index];
+            List<string> list = str.ToList<string>();
+            list.RemoveAll(thislist => thislist == "");
+            str = list.ToArray();
+            return str;
         }
-        //fcjjm, kw lykc gq tmjgi qcpecw
     }
 }
